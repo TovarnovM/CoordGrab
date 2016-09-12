@@ -6,23 +6,123 @@
         xmlns:local="clr-namespace:CoordGrab"
         xmlns:oxy="http://oxyplot.org/wpf"
         mc:Ignorable="d"
-        Title="MainWindow" Height="541" Width="826.667">
+        Title="MainWindow" Height="565" Width="826.667">
 
     <Window.DataContext>
         <local:MainViewModel/>
     </Window.DataContext>
-    <Grid Margin="0,0,3,-19" RenderTransformOrigin="0.664,0.49">
-        <Button x:Name="button" Content="Save" HorizontalAlignment="Left" Height="46" Margin="10,10,0,0" VerticalAlignment="Top" Width="92" Click="button_Click"/>
-        <Button x:Name="button1" Content="Load" HorizontalAlignment="Left" Height="48" Margin="10,61,0,0" VerticalAlignment="Top" Width="92" Click="button1_Click"/>
-        <Button x:Name="button3" Content="Тест ранд функции" HorizontalAlignment="Left" Margin="10,162,0,0" VerticalAlignment="Top" Width="92" Height="28" Click="button3_Click"/>
-        <Grid Margin="132,10,10,10">
+    <Grid Margin="0,0,3,3" RenderTransformOrigin="0.664,0.49">
+        <TabControl x:Name="tabControl" Margin="0,0,0,14" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
+            <TabItem Header="Сигнал тесты">
+                <Grid Background="#FFE5E5E5" Margin="0,0,0,0">
 
-            <oxy:PlotView Model="{Binding MyModel}" Margin="53,47,42.333,62.667">
-            </oxy:PlotView>
-        </Grid>
-        <Button x:Name="button2" Content="Тест сигнала" HorizontalAlignment="Left" Height="29" Margin="10,128,0,0" VerticalAlignment="Top" Width="92" Click="button2_Click"/>
-        <CheckBox x:Name="chbx" Content="Сделать круто)" HorizontalAlignment="Left" Margin="10,474,0,0" VerticalAlignment="Top" Checked="checkBox_Checked" Click="chbx_Click" Unchecked="chbx_Unchecked"/>
-        <Button x:Name="button3_Copy" Content="Тест FuzzySignal" HorizontalAlignment="Left" Margin="10,195,0,0" VerticalAlignment="Top" Width="92" Height="28" Click="button3_Copy_Click"/>
+                    <Button x:Name="button" Content="Save" HorizontalAlignment="Left" Height="46" Margin="10,10,0,0" VerticalAlignment="Top" Width="92" Click="button_Click" Grid.ColumnSpan="2"/>
+                    <Button x:Name="button1" Content="Load" HorizontalAlignment="Left" Height="48" Margin="10,61,0,0" VerticalAlignment="Top" Width="92" Click="button1_Click" Grid.ColumnSpan="2"/>
+                    <Button x:Name="button3" Content="Тест ранд функции" HorizontalAlignment="Left" Margin="10,162,0,0" VerticalAlignment="Top" Width="92" Height="28" Click="button3_Click" Grid.ColumnSpan="2"/>
+                    <Grid Margin="105,0,10,0">
+
+                        <oxy:PlotView Model="{Binding Model1}" Margin="10"/>
+                    </Grid>
+                    <Button x:Name="button2" Content="Тест сигнала" HorizontalAlignment="Left" Height="29" Margin="10,128,0,0" VerticalAlignment="Top" Width="92" Click="button2_Click" Grid.ColumnSpan="2"/>
+                    <CheckBox x:Name="chbx" Content="Сделать круто)" HorizontalAlignment="Left" Margin="10,390,0,0" VerticalAlignment="Top" Checked="checkBox_Checked" Unchecked="chbx_Unchecked"/>
+                    <Button x:Name="button3_Copy" Content="Тест FuzzySignal" HorizontalAlignment="Left" Margin="10,195,0,0" VerticalAlignment="Top" Width="92" Height="28" Click="button3_Copy_Click" Grid.ColumnSpan="2"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Траектории прицелов">
+                <Grid Background="#FFE5E5E5" Margin="0,0,0,0">
+                    <Grid Margin="105,0,10,0">
+                        <oxy:PlotView Model="{Binding Model2}" Margin="10"/>
+                    </Grid>
+                    <Rectangle Fill="#FFF4F4F5" HorizontalAlignment="Left" Margin="0,20,0,64" Stroke="Black" Width="99"/>
+                    <RadioButton x:Name="radioButton" Content="Траект. 1" HorizontalAlignment="Left" Margin="9,30,0,0" VerticalAlignment="Top" IsChecked="True" Checked="radioButton_Checked"/>
+                    <RadioButton x:Name="radioButton_Copy" Content="Траект. 2" HorizontalAlignment="Left" Margin="10,50,0,0" VerticalAlignment="Top" Checked="radioButton_Copy_Checked"/>
+                    <RadioButton x:Name="radioButton_Copy1" Content="Траект. 3" HorizontalAlignment="Left" Margin="10,70,0,0" VerticalAlignment="Top" Checked="radioButton_Copy1_Checked"/>
+                    <RadioButton x:Name="radioButton_Copy2" Content="Траект. 4" HorizontalAlignment="Left" Margin="10,90,0,0" VerticalAlignment="Top" Checked="radioButton_Copy2_Checked"/>
+                    <Button x:Name="button4" HorizontalAlignment="Left" Height="41" Margin="7,116,0,0" VerticalAlignment="Top" Width="87" Click="button4_Click">
+                        <TextBlock>Удалить<LineBreak/>Посл. точку</TextBlock>
+                    </Button>
+                    <CheckBox x:Name="checkBox" Content="Показ.№" HorizontalAlignment="Left" Margin="10,173,0,0" VerticalAlignment="Top" Checked="checkBox_Checked_1" Unchecked="checkBox_Unchecked" IsChecked="True"/>
+                    <Button x:Name="button5" Content="Сохранить" HorizontalAlignment="Left" Height="26" Margin="7,238,0,0" VerticalAlignment="Top" Width="87" Click="button5_Click"/>
+                    <Button x:Name="button5_Copy" Content="Загрузить" HorizontalAlignment="Left" Height="26" Margin="7,264,0,0" VerticalAlignment="Top" Width="87" Click="button5_Copy_Click"/>
+                    <TextBox x:Name="tbResize" HorizontalAlignment="Left" Height="18" Margin="10,193,0,0" TextWrapping="Wrap" Text="0,1" VerticalAlignment="Top" Width="84" ToolTip="Шаг времени" />
+                </Grid>
+            </TabItem>
+            <TabItem Header="Сигналы прицелов">
+                <Grid Background="#FFE5E5E5" Margin="0,0,0,0">
+
+
+                    <Grid Margin="105,0,10,0" Grid.Column="0">
+                        <oxy:PlotView Model="{Binding Model3}" Margin="10"/>
+                    </Grid>
+
+                    <Grid Height="489" VerticalAlignment="Top" HorizontalAlignment="Left" Width="105">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="122*"/>
+                            <RowDefinition Height="122*"/>
+                            <RowDefinition Height="122*"/>
+                            <RowDefinition Height="122*"/>
+                            <RowDefinition Height="50*"/>
+                        </Grid.RowDefinitions>
+
+                        <TextBox x:Name="tbHz0" HorizontalAlignment="Left" Height="19" Margin="10,33,0,0" TextWrapping="Wrap" Text="50" VerticalAlignment="Top" Width="77" ToolTip="Частота" />
+                        <TextBox x:Name="tbdHz0" HorizontalAlignment="Left" Height="18" Margin="10,57,0,0" TextWrapping="Wrap" Text="5" VerticalAlignment="Top" Width="77" ToolTip="Разброс частоты" />
+                        <TextBox x:Name="tbT0" HorizontalAlignment="Left" Height="18" Margin="10,80,0,0" TextWrapping="Wrap" Text="0,7" VerticalAlignment="Top" Width="77" ToolTip="Относительная длина импульса [0;1]"/>
+                        <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Height="18" Margin="10,10,0,0" TextWrapping="Wrap" Text="Сигнал 1 пр." VerticalAlignment="Top" Width="77" />
+
+                        <TextBox x:Name="tbHz1" HorizontalAlignment="Left" Height="19" Margin="10,33,0,0" TextWrapping="Wrap" Text="30" VerticalAlignment="Top" Width="77" ToolTip="Частота" Grid.Row="1" />
+                        <TextBox x:Name="tbdHz1" HorizontalAlignment="Left" Height="18" Margin="10,57,0,0" TextWrapping="Wrap" Text="5" VerticalAlignment="Top" Width="77" ToolTip="Разброс частоты" Grid.Row="1" />
+                        <TextBox x:Name="tbT1" HorizontalAlignment="Left" Height="18" Margin="10,80,0,0" TextWrapping="Wrap" Text="0,7" VerticalAlignment="Top" Width="77" ToolTip="Относительная длина импульса [0;1]" Grid.Row="1" />
+                        <TextBlock x:Name="textBlock_Copy" HorizontalAlignment="Left" Height="18" Margin="10,10,0,0" TextWrapping="Wrap" Text="Сигнал 2 пр." VerticalAlignment="Top" Width="77" Grid.Row="1" />
+                        <TextBox x:Name="tbHz2" HorizontalAlignment="Left" Height="19" Margin="10,33,0,0" TextWrapping="Wrap" Text="70" VerticalAlignment="Top" Width="77" ToolTip="Частота" Grid.Row="2" />
+                        <TextBox x:Name="tbdHz2" HorizontalAlignment="Left" Height="18" Margin="10,57,0,0" TextWrapping="Wrap" Text="5" VerticalAlignment="Top" Width="77" ToolTip="Разброс частоты" Grid.Row="2" />
+                        <TextBox x:Name="tbT2" HorizontalAlignment="Left" Height="18" Margin="10,80,0,0" TextWrapping="Wrap" Text="0,7" VerticalAlignment="Top" Width="77" ToolTip="Относительная длина импульса [0;1]" Grid.Row="2" />
+                        <TextBlock x:Name="textBlock_Copy1" HorizontalAlignment="Left" Height="18" Margin="10,10,0,0" TextWrapping="Wrap" Text="Сигнал 3 пр." VerticalAlignment="Top" Width="77" Grid.Row="2" />
+                        <TextBox x:Name="tbHz3" HorizontalAlignment="Left" Height="19" Margin="10,33,0,0" TextWrapping="Wrap" Text="90" VerticalAlignment="Top" Width="77" ToolTip="Частота" Grid.Row="3" />
+                        <TextBox x:Name="tbdHz3" HorizontalAlignment="Left" Height="18" Margin="10,57,0,0" TextWrapping="Wrap" Text="5" VerticalAlignment="Top" Width="77" ToolTip="Разброс частоты" Grid.Row="3" />
+                        <TextBox x:Name="tbT3" HorizontalAlignment="Left" Height="18" Margin="10,80,0,0" TextWrapping="Wrap" Text="0,7" VerticalAlignment="Top" Width="77" ToolTip="Относительная длина импульса [0;1]" Grid.Row="3" />
+                        <TextBlock x:Name="textBlock_Copy2" HorizontalAlignment="Left" Height="18" Margin="10,10,0,0" TextWrapping="Wrap" Text="Сигнал 4 пр." VerticalAlignment="Top" Width="77" Grid.Row="3" />
+
+                        <Button x:Name="button8" Content="Применить" HorizontalAlignment="Left" Height="20" Margin="7,0,0,0" VerticalAlignment="Top" Width="88" Grid.Row="4" Click="button8_Click"/>
+                        <Button x:Name="button8_Copy" Content="Загр." HorizontalAlignment="Left" Height="20" Margin="7,20,0,0" VerticalAlignment="Top" Width="41" Grid.Row="4" Click="button8_Copy_Click"/>
+                        <Button x:Name="button8_Copy1" Content="Сохр" HorizontalAlignment="Left" Height="20" Margin="53,20,0,0" VerticalAlignment="Top" Width="42" Grid.Row="4" Click="button8_Copy1_Click"/>
+                    </Grid>
+
+                </Grid>
+
+            </TabItem>
+            <TabItem Header="Симуляция во времени">
+                <Grid Background="#FFE5E5E5" Margin="0,0,0,0">
+
+
+                    <Grid Margin="105,0,10,26" Grid.Column="1">
+                        <oxy:PlotView Model="{Binding Model4}" Margin="10"/>
+                    </Grid>
+                    <Button x:Name="button6" HorizontalAlignment="Left" Margin="41,0,0,0" Width="27" Height="26" VerticalAlignment="Bottom">
+                        <Button.Foreground>
+                            <SolidColorBrush Color="Black"/>
+                        </Button.Foreground>
+                        <Button.Background>
+                            <ImageBrush ImageSource="Resources/PlayImage.bmp" Stretch="Uniform"/>
+                        </Button.Background>
+                    </Button>
+                    <Button x:Name="button6_Copy" HorizontalAlignment="Left" Margin="73,0,0,0" Width="27" RenderTransformOrigin="-0.741,0.526" Height="26" VerticalAlignment="Bottom">
+                        <Button.BorderBrush>
+                            <ImageBrush ImageSource="Resources/PauseImage.bmp">
+                            </ImageBrush>
+                        </Button.BorderBrush>
+                        <Button.Background>
+                            <ImageBrush ImageSource="Resources/PauseImage.bmp"/>
+                        </Button.Background>
+                    </Button>
+                    <Slider x:Name="slider" Margin="105,0,0,0" Height="26" VerticalAlignment="Bottom"/>
+                    <Button x:Name="button7" Content="Загрузить" HorizontalAlignment="Left" Height="26" Margin="10,10,0,0" VerticalAlignment="Top" Width="90" Grid.ColumnSpan="2" Click="button7_Click"/>
+                    <CheckBox x:Name="checkBox1" Content="Распознать" HorizontalAlignment="Left" Margin="10,72,0,0" VerticalAlignment="Top" Checked="checkBox1_Checked" Unchecked="checkBox1_Unchecked"/>
+                    <Button x:Name="button7_Copy" Content="Загрузить Станд." HorizontalAlignment="Left" Height="26" Margin="10,41,0,0" VerticalAlignment="Top" Width="90" Click="button7_Copy_Click"/>
+                    <TextBox x:Name="tbCameraHz" HorizontalAlignment="Left" Height="19" Margin="10,102,0,0" TextWrapping="Wrap" Text="120" VerticalAlignment="Top" Width="90" ToolTip="Hz камеры"/>
+                    <TextBox x:Name="tbDCameraHz" HorizontalAlignment="Left" Height="19" Margin="10,126,0,0" TextWrapping="Wrap" Text="10" VerticalAlignment="Top" Width="90" ToolTip="dHz камеры"/>
+                </Grid>
+            </TabItem>
+        </TabControl>
 
     </Grid>
 </Window>

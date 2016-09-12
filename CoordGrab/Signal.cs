@@ -12,7 +12,9 @@ namespace CoordGrab {
         public double Hz0 { get; set; }
         public double Hz { get; set; }
         public double Amplitude { get; set; }
+        public double Shift0 { get; set; }
         public double Shift { get; set; }
+        public double T1 { get; set; }
         public double TimeCurr { get; set; }
         public string Name { get; set; }
         public Signal() : this(1) { }
@@ -20,6 +22,7 @@ namespace CoordGrab {
             SetRectangleImpulse(0.5);
             Name = name;
             Hz0 = hz0;
+            Shift0 = 0d;
             Amplitude = 1d;
             Reset();
         }
@@ -49,12 +52,13 @@ namespace CoordGrab {
         }
         public void Reset() {
             Hz = Hz0;
-            Shift = 0d;
+            Shift = Shift0;
             TimeCurr = 0d;
             
         }
         public void SetRectangleImpulse(double t1) {
             OneHzImpulse = RectangleImpulse(t1);
+            T1 = t1;
         }
         public void SetTrapecImpulse(double t1,double t2,double t3) {
             OneHzImpulse = TrapecImpulse(t1,t2,t3);
@@ -128,7 +132,7 @@ namespace CoordGrab {
     }
     [Serializable]
     public class FuzzySignal : Signal {
-        public double  deltaHz { get; set; }
+        public double  DeltaHz { get { return s_rnd.SKOx3; } set { s_rnd.SKOx3 = value; } }
         public InterpXY InterpHz { get; set; }
         public bool GenerateNewHzFunct { get; set; } = true;
         private RndFunction s_rnd;
@@ -141,7 +145,8 @@ namespace CoordGrab {
         /// <param name="name"></param>
         public FuzzySignal(double hz0, double deltaHz, string name = "") : base(hz0,name) {
             s_rnd = new RndFunction(t => Hz0,deltaHz,1d / Hz0,0.7d / Hz0);
-            Shift = s_rnd.Random.GetDouble();
+            Shift0 = s_rnd.Random.GetDouble();
+            Shift = Shift0;
         }
         public override InterpXY GetInterpSignal(IEnumerable<double> pointsTime) {
             var res = new InterpXY();             

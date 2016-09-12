@@ -1,4 +1,5 @@
 ﻿using Interpolator;
+using OxyPlot;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -9,14 +10,23 @@ using System.Windows;
 using System.Xml.Serialization;
 
 namespace CoordGrab {
-    [Serializable]
+    [Serializable,XmlRoot(nameof(TrueCoord))]
     public class TrueCoord {
+        private string _name;
         public InterpXY X { get; set; }
         public InterpXY Y { get; set; }
-        public string Name { get; private set; }
+        public TrueCoord():this("") {
+
+        }
+        public string Name { get { return _name; }
+            set {
+                _name = value;
+                X.Title = "X_Coords_of_" + _name;
+                Y.Title = "Y_Coords_of_" + _name;
+            } }
         public TrueCoord(string name = "") {
-            X = new InterpXY() { Title = "X_Coords_of_" + name };
-            Y = new InterpXY() { Title = "Y_Coords_of_" + name };
+            X = new InterpXY();
+            Y = new InterpXY();
             Name = name;
         }
         public TrueCoord(string fileName, string name):this(name) {
@@ -66,6 +76,34 @@ namespace CoordGrab {
                 sw.Close();
             }
             catch(Exception) { }
+        }
+
+        public IEnumerable<DataPoint> DataPoints() {
+            for(int i = 0; i < X.Count; i++) {
+                yield return new DataPoint(X.Data.Values[i].Value,Y.Data.Values[i].Value);
+            }
+        }
+
+        public IEnumerable<DataPoint> DataPoints(Func<DataPoint,DataPoint> f) {
+            for(int i = 0; i < X.Count; i++) {
+                yield return f(new DataPoint(X.Data.Values[i].Value,Y.Data.Values[i].Value));
+            }
+        }
+
+        public void ResizeTime(double mnozj) {
+            var nwX = new InterpXY();
+            foreach(var xs in X.Data) {
+                nwX.Add(xs.Key * mnozj,xs.Value.Value);
+            }
+            X.Dispose();
+            X = nwX;
+
+            var nwY = new InterpXY();
+            foreach(var ys in Y.Data) {
+                nwY.Add(ys.Key * mnozj,ys.Value.Value);
+            }
+            Y.Dispose();
+            Y = nwY;
         }
         
     }

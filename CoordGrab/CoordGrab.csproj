@@ -80,6 +80,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -152,6 +153,18 @@
       <Project>{5c93bceb-59bc-4510-823e-8860581b1332}</Project>
       <Name>InterpApp</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\PlayImage.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\PauseImage.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Coords.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Signals.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

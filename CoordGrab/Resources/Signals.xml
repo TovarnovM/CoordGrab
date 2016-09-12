@@ -1,0 +1,415 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfFuzzySignal xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <FuzzySignal>
+    <OneHzImpulse>
+      <_data>
+        <DoubleInterpDouble>
+          <double>0</double>
+          <InterpDouble Value="1" />
+        </DoubleInterpDouble>
+        <DoubleInterpDouble>
+          <double>0.7</double>
+          <InterpDouble Value="0" />
+        </DoubleInterpDouble>
+        <DoubleInterpDouble>
+          <double>1</double>
+          <InterpDouble Value="0" />
+        </DoubleInterpDouble>
+      </_data>
+      <Title>Title</Title>
+      <ET_left>etRepeat</ET_left>
+      <ET_right>etRepeat</ET_right>
+      <InterpType>itStep</InterpType>
+    </OneHzImpulse>
+    <Hz0>50</Hz0>
+    <Hz>51.337365214270655</Hz>
+    <Amplitude>1</Amplitude>
+    <Shift0>0.91378315627285422</Shift0>
+    <Shift>0.71685657045803086</Shift>
+    <T1>0.7</T1>
+    <TimeCurr>0.23333333333333334</TimeCurr>
+    <Name>Signal_1</Name>
+    <DeltaHz>0</DeltaHz>
+    <InterpHz>
+      <_data>
+        <DoubleInterpDouble>
+          <double>0</double>
+          <InterpDouble Value="50.931258361375818" />
+        </DoubleInterpDouble>
+        <DoubleInterpDouble>
+          <double>0.02</double>
+          <InterpDouble Value="49.54855299244015" />
+        </DoubleInterpDouble>
+        <DoubleInterpDouble>
+          <double>0.04</double>
+          <InterpDouble Value="49.764386943363064" />
+        </DoubleInterpDouble>
+        <DoubleInterpDouble>
+          <double>0.06</double>
+          <InterpDouble Value="49.594521569916509" />
+        </DoubleInterpDouble>
+        <DoubleInterpDouble>
+          <double>0.08</double>
+          <InterpDouble Value="50.278589586666563" />
+        </DoubleInterpDouble>
+        <DoubleInterpDouble>
+          <double>0.1</double>
+          <InterpDouble Value="54.210436132012667" />
+        </DoubleInterpDouble>
+        <DoubleInterpDouble>
+          <double>0.12000000000000001</double>
+          <InterpDouble Value="48.851481881254415" />
+        </DoubleInterpDouble>
+        <DoubleInterpDouble>
+          <double>0.14</double>
+          <InterpDouble Value="49.645142903166693" />
+        </DoubleInterpDouble>
+        <DoubleInterpDouble>
+          <double>0.16</double>
+          <InterpDouble Value="49.6072476012243" />
+        </DoubleInterpDouble>
+        <DoubleInterpDouble>
+          <double>0.18</double>
+          <InterpDouble Value="53.80463197381237" />
+        </DoubleInterpDouble>
+        <DoubleInterpDouble>
+          <double>0.19999999999999998</double>
+          <InterpDouble Value="50.89225361577693" />
+        </DoubleInterpDouble>
+        <DoubleInterpDouble>
+          <double>0.21999999999999997</double>
+          <InterpDouble Value="49.654050069739107" />
+        </DoubleInterpDouble>
+        <DoubleInterpDouble>
+          <double>0.23333333333333334</double>
+          <InterpDouble Value="51.337365214270655" />
+        </DoubleInterpDouble>
+      </_data>
+      <Title>Title</Title>
+      <ET_left>etValue</ET_left>
+      <ET_right>etValue</ET_right>
+      <InterpType>itLine</InterpType>
+    </InterpHz>
+    <GenerateNewHzFunct>true</GenerateNewHzFunct>
+  </FuzzySignal>
+  <FuzzySignal>
+    <OneHzImpulse>
+      <_data>
+        <DoubleInterpDouble>
+          <double>0</double>
+          <InterpDouble Value="1" />
+        </DoubleInterpDouble>
+        <DoubleInterpDouble>
+          <double>0.7</double>
+          <InterpDouble Value="0" />
+        </DoubleInterpDouble>
+        <DoubleInterpDouble>
+          <double>1</double>
+          <InterpDouble Value="0" />
+        </DoubleInterpDouble>
+      </_data>
+      <Title>Title</Title>
+      <ET_left>etRepeat</ET_left>
+      <ET_right>etRepeat</ET_right>
+      <InterpType>itStep</InterpType>
+    </OneHzImpulse>
+    <Hz0>30</Hz0>
+    <Hz>30.466419550115276</Hz>
+    <Amplitude>1</Amplitude>
+    <Shift0>0.40135873965982288</Shift0>
+    <Shift>0.512496141825705</Shift>
+    <T1>0.7</T1>
+    <TimeCurr>0.23333333333333334</TimeCurr>
+    <Name>Signal_2</Name>
+    <DeltaHz>0</DeltaHz>
+    <InterpHz>
+      <_data>
+        <DoubleInterpDouble>
+          <double>0</double>
+          <InterpDouble Value="29.483665747263604" />
+        </DoubleInterpDouble>
+        <DoubleInterpDouble>
+          <double>0.033333333333333333</double>
+          <InterpDouble Value="29.3848560860924" />
+        </DoubleInterpDouble>
+        <DoubleInterpDouble>
+          <double>0.066666666666666666</double>
+          <InterpDouble Value="30.618958952077016" />
+        </DoubleInterpDouble>
+        <DoubleInterpDouble>
+          <double>0.1</double>
+          <InterpDouble Value="31.079265643823518" />
+        </DoubleInterpDouble>
+        <DoubleInterpDouble>
+          <double>0.13333333333333333</double>
+          <InterpDouble Value="29.964349259187252" />
+        </DoubleInterpDouble>
+        <DoubleInterpDouble>
+          <double>0.16666666666666666</double>
+          <InterpDouble Value="30.346134450816024" />
+        </DoubleInterpDouble>
+        <DoubleInterpDouble>
+          <double>0.19999999999999998</double>
+          <InterpDouble Value="30.833623868610253" />
+        </DoubleInterpDouble>
+        <DoubleInterpDouble>
+          <double>0.23333333333333331</double>
+          <InterpDouble Value="32.74615105750371" />
+        </DoubleInterpDouble>
+        <DoubleInterpDouble>
+          <double>0.23333333333333334</double>
+          <InterpDouble Value="30.466419550115276" />
+        </DoubleInterpDouble>
+      </_data>
+      <Title>Title</Title>
+      <ET_left>etValue</ET_left>
+      <ET_right>etValue</ET_right>
+      <InterpType>itLine</InterpType>
+    </InterpHz>
+    <GenerateNewHzFunct>true</GenerateNewHzFunct>
+  </FuzzySignal>
+  <FuzzySignal>
+    <OneHzImpulse>
+      <_data>
+        <DoubleInterpDouble>
+          <double>0</double>
+          <InterpDouble Value="1" />
+        </DoubleInterpDouble>
+        <DoubleInterpDouble>
+          <double>0.7</double>
+          <InterpDouble Value="0" />
+        </DoubleInterpDouble>
+        <DoubleInterpDouble>
+          <double>1</double>
+          <InterpDouble Value="0" />
+        </DoubleInterpDouble>
+      </_data>
+      <Title>Title</Title>
+      <ET_left>etRepeat</ET_left>
+      <ET_right>etRepeat</ET_right>
+      <InterpType>itStep</InterpType>
+    </OneHzImpulse>
+    <Hz0>70</Hz0>
+    <Hz>67.8991267185901</Hz>
+    <Amplitude>1</Amplitude>
+    <Shift0>0.017967078377477394</Shift0>
+    <Shift>0.39822689718245197</Shift>
+    <T1>0.7</T1>
+    <TimeCurr>0.23333333333333334</TimeCurr>
+    <Name>Signal_3</Name>
+    <DeltaHz>0</DeltaHz>
+    <InterpHz>
+      <_data>
+        <DoubleInterpDouble>
+          <double>0</double>
+          <InterpDouble Value="68.437217745261847" />
+        </DoubleInterpDouble>
+        <DoubleInterpDouble>
+          <double>0.014285714285714285</double>
+          <InterpDouble Value="69.71518030328906" />
+        </DoubleInterpDouble>
+        <DoubleInterpDouble>
+          <double>0.028571428571428571</double>
+          <InterpDouble Value="72.847342927780019" />
+        </DoubleInterpDouble>
+        <DoubleInterpDouble>
+          <double>0.042857142857142858</double>
+          <InterpDouble Value="66.78983361029475" />
+        </DoubleInterpDouble>
+        <DoubleInterpDouble>
+          <double>0.057142857142857141</double>
+          <InterpDouble Value="67.26944575512303" />
+        </DoubleInterpDouble>
+        <DoubleInterpDouble>
+          <double>0.071428571428571425</double>
+          <InterpDouble Value="69.983003536244652" />
+        </DoubleInterpDouble>
+        <DoubleInterpDouble>
+          <double>0.085714285714285715</double>
+          <InterpDouble Value="70.008086512258231" />
+        </DoubleInterpDouble>
+        <DoubleInterpDouble>
+          <double>0.1</double>
+          <InterpDouble Value="70.812755783308617" />
+        </DoubleInterpDouble>
+        <DoubleInterpDouble>
+          <double>0.1142857142857143</double>
+          <InterpDouble Value="72.823863762665709" />
+        </DoubleInterpDouble>
+        <DoubleInterpDouble>
+          <double>0.12857142857142859</double>
+          <InterpDouble Value="70.665075982370439" />
+        </DoubleInterpDouble>
+        <DoubleInterpDouble>
+          <double>0.14285714285714288</double>
+          <InterpDouble Value="70.068094197114675" />
+        </DoubleInterpDouble>
+        <DoubleInterpDouble>
+          <double>0.15714285714285717</double>
+          <InterpDouble Value="70.213563244026375" />
+        </DoubleInterpDouble>
+        <DoubleInterpDouble>
+          <double>0.17142857142857146</double>
+          <InterpDouble Value="68.661355391622365" />
+        </DoubleInterpDouble>
+        <DoubleInterpDouble>
+          <double>0.18571428571428575</double>
+          <InterpDouble Value="73.24044482743129" />
+        </DoubleInterpDouble>
+        <DoubleInterpDouble>
+          <double>0.20000000000000004</double>
+          <InterpDouble Value="71.742531027203341" />
+        </DoubleInterpDouble>
+        <DoubleInterpDouble>
+          <double>0.21428571428571433</double>
+          <InterpDouble Value="69.758330048927" />
+        </DoubleInterpDouble>
+        <DoubleInterpDouble>
+          <double>0.22857142857142862</double>
+          <InterpDouble Value="69.726452210647182" />
+        </DoubleInterpDouble>
+        <DoubleInterpDouble>
+          <double>0.23333333333333334</double>
+          <InterpDouble Value="67.8991267185901" />
+        </DoubleInterpDouble>
+      </_data>
+      <Title>Title</Title>
+      <ET_left>etValue</ET_left>
+      <ET_right>etValue</ET_right>
+      <InterpType>itLine</InterpType>
+    </InterpHz>
+    <GenerateNewHzFunct>true</GenerateNewHzFunct>
+  </FuzzySignal>
+  <FuzzySignal>
+    <OneHzImpulse>
+      <_data>
+        <DoubleInterpDouble>
+          <double>0</double>
+          <InterpDouble Value="1" />
+        </DoubleInterpDouble>
+        <DoubleInterpDouble>
+          <double>0.7</double>
+          <InterpDouble Value="0" />
+        </DoubleInterpDouble>
+        <DoubleInterpDouble>
+          <double>1</double>
+          <InterpDouble Value="0" />
+        </DoubleInterpDouble>
+      </_data>
+      <Title>Title</Title>
+      <ET_left>etRepeat</ET_left>
+      <ET_right>etRepeat</ET_right>
+      <InterpType>itStep</InterpType>
+    </OneHzImpulse>
+    <Hz0>90</Hz0>
+    <Hz>89.8556274341723</Hz>
+    <Amplitude>1</Amplitude>
+    <Shift0>0.96012483954435435</Shift0>
+    <Shift>0.97498052374457411</Shift>
+    <T1>0.7</T1>
+    <TimeCurr>0.23333333333333334</TimeCurr>
+    <Name>Signal_4</Name>
+    <DeltaHz>0</DeltaHz>
+    <InterpHz>
+      <_data>
+        <DoubleInterpDouble>
+          <double>0</double>
+          <InterpDouble Value="88.673176849832572" />
+        </DoubleInterpDouble>
+        <DoubleInterpDouble>
+          <double>0.011111111111111112</double>
+          <InterpDouble Value="89.633512736116685" />
+        </DoubleInterpDouble>
+        <DoubleInterpDouble>
+          <double>0.022222222222222223</double>
+          <InterpDouble Value="89.126849558873943" />
+        </DoubleInterpDouble>
+        <DoubleInterpDouble>
+          <double>0.033333333333333333</double>
+          <InterpDouble Value="89.488357779734528" />
+        </DoubleInterpDouble>
+        <DoubleInterpDouble>
+          <double>0.044444444444444446</double>
+          <InterpDouble Value="90.287672073219383" />
+        </DoubleInterpDouble>
+        <DoubleInterpDouble>
+          <double>0.055555555555555559</double>
+          <InterpDouble Value="91.367762390982577" />
+        </DoubleInterpDouble>
+        <DoubleInterpDouble>
+          <double>0.066666666666666666</double>
+          <InterpDouble Value="89.831783946621528" />
+        </DoubleInterpDouble>
+        <DoubleInterpDouble>
+          <double>0.077777777777777779</double>
+          <InterpDouble Value="92.63956954629036" />
+        </DoubleInterpDouble>
+        <DoubleInterpDouble>
+          <double>0.088888888888888892</double>
+          <InterpDouble Value="91.232648153919371" />
+        </DoubleInterpDouble>
+        <DoubleInterpDouble>
+          <double>0.1</double>
+          <InterpDouble Value="92.714308390644845" />
+        </DoubleInterpDouble>
+        <DoubleInterpDouble>
+          <double>0.11111111111111112</double>
+          <InterpDouble Value="89.472346957525289" />
+        </DoubleInterpDouble>
+        <DoubleInterpDouble>
+          <double>0.12222222222222223</double>
+          <InterpDouble Value="89.86195973164871" />
+        </DoubleInterpDouble>
+        <DoubleInterpDouble>
+          <double>0.13333333333333333</double>
+          <InterpDouble Value="88.483914441740922" />
+        </DoubleInterpDouble>
+        <DoubleInterpDouble>
+          <double>0.14444444444444443</double>
+          <InterpDouble Value="87.0373452906303" />
+        </DoubleInterpDouble>
+        <DoubleInterpDouble>
+          <double>0.15555555555555553</double>
+          <InterpDouble Value="89.410253424201116" />
+        </DoubleInterpDouble>
+        <DoubleInterpDouble>
+          <double>0.16666666666666663</double>
+          <InterpDouble Value="89.232137299089118" />
+        </DoubleInterpDouble>
+        <DoubleInterpDouble>
+          <double>0.17777777777777773</double>
+          <InterpDouble Value="91.404032172761958" />
+        </DoubleInterpDouble>
+        <DoubleInterpDouble>
+          <double>0.18888888888888883</double>
+          <InterpDouble Value="90.853107298189187" />
+        </DoubleInterpDouble>
+        <DoubleInterpDouble>
+          <double>0.19999999999999993</double>
+          <InterpDouble Value="92.53450828445547" />
+        </DoubleInterpDouble>
+        <DoubleInterpDouble>
+          <double>0.21111111111111103</double>
+          <InterpDouble Value="90.4167249866267" />
+        </DoubleInterpDouble>
+        <DoubleInterpDouble>
+          <double>0.22222222222222213</double>
+          <InterpDouble Value="87.837104126477158" />
+        </DoubleInterpDouble>
+        <DoubleInterpDouble>
+          <double>0.23333333333333323</double>
+          <InterpDouble Value="88.23525691568635" />
+        </DoubleInterpDouble>
+        <DoubleInterpDouble>
+          <double>0.23333333333333334</double>
+          <InterpDouble Value="89.8556274341723" />
+        </DoubleInterpDouble>
+      </_data>
+      <Title>Title</Title>
+      <ET_left>etValue</ET_left>
+      <ET_right>etValue</ET_right>
+      <InterpType>itLine</InterpType>
+    </InterpHz>
+    <GenerateNewHzFunct>true</GenerateNewHzFunct>
+  </FuzzySignal>
+</ArrayOfFuzzySignal>
