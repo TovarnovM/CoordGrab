@@ -293,7 +293,7 @@ namespace CoordGrab
                 Model4.Series.Add(new ScatterSeries {
                     Title = "траектория"+i.ToString(),
                     MarkerType = MarkerType.Circle,
-                    MarkerSize = 1
+                    MarkerSize = 2
                 });
             }
 
@@ -364,9 +364,46 @@ namespace CoordGrab
 
         }
 
+        public void GetGraphics() {
+            if(Model4.Series.Count == 4) {
+                Model4.Series.Add(new LineSeries {
+                    Title = "t фактич траектории 1",
+                    Color = OxyColors.SkyBlue
+                });
+                Model4.Series.Add(new LineSeries {
+                    Title = "t фактич траектории 2",
+                    Color = OxyColors.DarkBlue
+                });
+                Model4.Series.Add(new LineSeries {
+                    Title = "t фактич траектории 3",
+                    Color = OxyColors.MediumVioletRed
+                });
+                Model4.Series.Add(new LineSeries {
+                    Title = "t фактич траектории 4",
+                    Color = OxyColors.ForestGreen
+                });
+               
+            }
+            for(int i = 4; i < 8; i++) {
+                (Model4.Series[i] as LineSeries).Points.Clear();
+            }
+
+            for(int i = 0; i < 4; i++) {
+                int n = 0;
+                for(int j = 0; j < ReceivedPoints.Count; j++) {
+                    if(ReceivedPoints[j][i].HasValue)
+                        n++;
+                    (Model4.Series[i + 4] as LineSeries).Points.Add(new DataPoint(j,(double)n / (j+1)));
+                }
+            }
+            Model4.InvalidatePlot(false);
+        }
+
         public void RedrawModel4() {
-            foreach(var ser in Model4.Series) {
-                (ser as ScatterSeries).Points.Clear();
+            for(int i = 0;
+            i < 4;
+            i++) {
+                (Model4.Series[i] as ScatterSeries).Points.Clear();
             }
 
             for(int i = 0; i < 4; i++) {

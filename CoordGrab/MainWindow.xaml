@@ -118,8 +118,11 @@
                     <Button x:Name="button7" Content="Загрузить" HorizontalAlignment="Left" Height="26" Margin="10,10,0,0" VerticalAlignment="Top" Width="90" Grid.ColumnSpan="2" Click="button7_Click"/>
                     <CheckBox x:Name="checkBox1" Content="Распознать" HorizontalAlignment="Left" Margin="10,72,0,0" VerticalAlignment="Top" Checked="checkBox1_Checked" Unchecked="checkBox1_Unchecked"/>
                     <Button x:Name="button7_Copy" Content="Загрузить Станд." HorizontalAlignment="Left" Height="26" Margin="10,41,0,0" VerticalAlignment="Top" Width="90" Click="button7_Copy_Click"/>
-                    <TextBox x:Name="tbCameraHz" HorizontalAlignment="Left" Height="19" Margin="10,102,0,0" TextWrapping="Wrap" Text="120" VerticalAlignment="Top" Width="90" ToolTip="Hz камеры"/>
+                    <TextBox x:Name="tbCameraHz" HorizontalAlignment="Left" Height="19" Margin="10,102,0,0" TextWrapping="Wrap" Text="110" VerticalAlignment="Top" Width="90" ToolTip="Hz камеры"/>
                     <TextBox x:Name="tbDCameraHz" HorizontalAlignment="Left" Height="19" Margin="10,126,0,0" TextWrapping="Wrap" Text="10" VerticalAlignment="Top" Width="90" ToolTip="dHz камеры"/>
+                    <Button x:Name="button9" Content="Save to XML" HorizontalAlignment="Left" Height="33" Margin="10,202,0,0" VerticalAlignment="Top" Width="82" Click="button9_Click"/>
+                    <Button x:Name="button9_Copy" Content="Save to CSV" HorizontalAlignment="Left" Height="33" Margin="10,240,0,0" VerticalAlignment="Top" Width="82" Click="button9_Copy_Click"/>
+                    <Button x:Name="button10" Content="графики" HorizontalAlignment="Left" Height="23" Margin="16,164,0,0" VerticalAlignment="Top" Width="84" Click="button10_Click"/>
                 </Grid>
             </TabItem>
         </TabControl>

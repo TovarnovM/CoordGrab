@@ -321,17 +321,17 @@ namespace CoordGrab {
         }
 
         private void SaveSignals(string filename) {
-                try {
-                    XmlSerializer serial = new XmlSerializer(typeof(List<FuzzySignal>));
-                    var sw = new StreamWriter(filename);
-                    var vm = DataContext as MainViewModel;
-                    serial.Serialize(sw,vm.Signals);
-                    sw.Close();
-                }
-                catch {
-                    throw new Exception("((");
+            try {
+                XmlSerializer serial = new XmlSerializer(typeof(List<FuzzySignal>));
+                var sw = new StreamWriter(filename);
+                var vm = DataContext as MainViewModel;
+                serial.Serialize(sw,vm.Signals);
+                sw.Close();
+            }
+            catch {
+                throw new Exception("((");
 
-                }
+            }
         }
 
         private void button8_Copy_Click(object sender,RoutedEventArgs e) {
@@ -386,8 +386,8 @@ namespace CoordGrab {
         }
 
         private void button7_Copy_Click(object sender,RoutedEventArgs e) {
-            OpenCoords(@"Coords.xml");
-            OpenSignals(@"Signals.xml");
+            OpenCoords(@"Coords2.xml");
+            OpenSignals(@"Signals2.xml");
             var vm = DataContext as MainViewModel;
             vm.SynchModels(1,120,10);
         }
@@ -401,8 +401,128 @@ namespace CoordGrab {
             var vm = DataContext as MainViewModel;
             vm.ColoredPoints = false;
         }
+
+        private void button9_Click(object sender,RoutedEventArgs e) {
+            // Configure save file dialog box
+            Microsoft.Win32.SaveFileDialog dlg = new Microsoft.Win32.SaveFileDialog();
+            dlg.FileName = "All"; // Default file name
+            dlg.DefaultExt = ".xml"; // Default file extension
+            dlg.Filter = "Text documents (.xml)|*.xml"; // Filter files by extension
+
+            // Show save file dialog box
+            Nullable<bool> result = dlg.ShowDialog();
+
+            // Process save file dialog box results
+            if(result == true) {
+                // Save document
+                string filename = dlg.FileName;
+                SaveReceivedPointsXML(filename);
+            }
+
+
+        }
+        private void SaveReceivedPointsXML(string filename) {
+            try {
+                XmlSerializer serial = new XmlSerializer(typeof(ResultSaver));
+                var sw = new StreamWriter(filename);
+                var vm = DataContext as MainViewModel;
+                var data = new ResultSaver();
+                data.FillMeFromMainViewModel(vm);
+
+                serial.Serialize(sw,data);
+                sw.Close();
+            }
+            catch {
+                throw new Exception("((");
+
+            }
+
+        }
+        private void SaveReceivedPointsCSV(string filename) {
+            try {
+                StringBuilder sb = new StringBuilder();
+                var vm = DataContext as MainViewModel;
+                string rzd = ";";
+                //add header line.
+                sb.Append("Time").Append(rzd);
+                for(int i = 0; i < 4; i++) {
+                    sb.Append("X" + i.ToString()).Append(rzd);
+                    sb.Append("Y" + i.ToString()).Append(rzd);
+                }
+                sb.Remove(sb.Length - 1,1).AppendLine();
+
+                for(int i = 0; i < vm.TimeMoments.Count; i++) {
+                    sb.Append(vm.TimeMoments[i]).Append(rzd);
+                    for(int j = 0; j < vm.ReceivedPoints[i].Count; j++) {
+                        if(vm.ReceivedPoints[i][j].HasValue) {
+                            sb.Append(vm.ReceivedPoints[i][j].Value.X).Append(rzd);
+                            sb.Append(vm.ReceivedPoints[i][j].Value.Y).Append(rzd);
+                        } else {
+                            sb.Append("").Append(rzd);
+                            sb.Append("").Append(rzd);
+                        }                   
+                    }
+                    sb.Remove(sb.Length - 1,1).AppendLine();
+                }
+
+                File.WriteAllText(filename,sb.ToString());
+            }
+            catch {
+                throw new Exception("((");
+
+            }
+
+        }
+
+        private void button9_Copy_Click(object sender,RoutedEventArgs e) {
+            // Configure save file dialog box
+            Microsoft.Win32.SaveFileDialog dlg = new Microsoft.Win32.SaveFileDialog();
+            dlg.FileName = "All"; // Default file name
+            dlg.DefaultExt = ".csv"; // Default file extension
+            dlg.Filter = "Text documents (.csv)|*.csv"; // Filter files by extension
+
+            // Show save file dialog box
+            Nullable<bool> result = dlg.ShowDialog();
+
+            // Process save file dialog box results
+            if(result == true) {
+                // Save document
+                string filename = dlg.FileName;
+                SaveReceivedPointsCSV(filename);
+            }
+        }
+
+        private void button10_Click(object sender,RoutedEventArgs e) {
+            var vm = DataContext as MainViewModel;
+            vm.GetGraphics();
+            
+            
+        }
     }
 
+    [Serializable]
+    public class ResultSaver {
+        public List<TrueCoord> Coords { get; set; }
+        public List<InterpXY> SignalsInterp { get; set; }
+        public List<double> TimeMoments { get; set; }
+        public List<List<Vector?>> ReceivedPoints { get; set; }
+        public List<FuzzySignal> Signals { get; set; }
+        public void FillMainViewModel(MainViewModel vm) {
+            vm.Coords = Coords;
+            vm.SignalsInterp = SignalsInterp;
+            vm.TimeMoments = TimeMoments;
+            vm.ReceivedPoints = ReceivedPoints;
+            vm.Signals = Signals;
+        }
+        public void FillMeFromMainViewModel(MainViewModel vm) {
+            Coords = vm.Coords;
+            SignalsInterp = vm.SignalsInterp;
+            TimeMoments = vm.TimeMoments;
+            ReceivedPoints = vm.ReceivedPoints;
+            Signals = vm.Signals;
+        }
+
+    }
 
 
     public static class InterpXYExt {
