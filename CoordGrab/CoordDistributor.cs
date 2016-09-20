@@ -40,14 +40,19 @@ namespace CoordGrab {
         public int AddPoints(double t, Vector[] points) {
             GoodBase.ClearOldData(t, TooLatePeriod);
             UnknownClosePoints.ClearOldData(t,TooLatePeriod);
-
+            //точки, которые не подошли идеально
             var unknownPoints = new List<Vector>(points.Length);
+            //спорные точки, которые подошли больше, чем 1 известным координатам
             var sporniePoints = new List<SpornajzTochka>(points.Length);
+            //список идентицицированных прицелов, неполучивших реальную точку
             var nepoluchivshie = new List<IKnownCoords>(GoodBase);
+            //список идентицицированных прицелов, получивших реальную точку
             var poluchivshie = new List<IKnownCoords>(GoodBase.Count);
+            //список неидентицицированных прицелов, неполучивших реальную точку
             var nepoluchivshieUnknown = new List<IUnknownCoords>(UnknownClosePoints);
             #region принятие идеальных точек
             foreach(var point in points) {
+                //список идентицицированных прицелов, которым подошла текущая точка
                 var okCoords =
                     GoodBase.
                     Where(np => np.CoordList.Count > 0).
@@ -55,16 +60,19 @@ namespace CoordGrab {
                     ToList();
                 switch(okCoords.Count) {
                     case 1: {
+                        //идеальный случай
                         okCoords[0].AddPoint(point,t);
                         nepoluchivshie.Remove(okCoords[0]);
                         poluchivshie.Add(okCoords[0]);
                         break;
                     }
                     case 0: {
+                        //точка находится вдалике от идентицицированных прицелов
                         unknownPoints.Add(point);
                         break;
                     }
                     default: {
+                        //неподелили
                         sporniePoints.Add(new SpornajzTochka(point,t,okCoords));
                         break;
                     }               
@@ -74,29 +82,34 @@ namespace CoordGrab {
 
             #region "разруливание" спорных ситуаций
             foreach(var sp in sporniePoints) {
+                //исключаем из кандидатов прицелы, которые уже получили свою точку
                 var tochnoSpornye = sp.Candidates.Except(poluchivshie).ToArray();
                 switch(tochnoSpornye.Length) {
                     case 1: {
+                        //не с кем спорить, получай
                         tochnoSpornye[0].AddPoint(sp.point,t);
                         nepoluchivshie.Remove(tochnoSpornye[0]);
                         poluchivshie.Add(tochnoSpornye[0]);
                         break;
                     }
                     case 0: {
+                        //опять непонятно что за точка
                         unknownPoints.Add(sp.point);
                         break;
                     }
                     default: {
-
+                        //выясняем, чья это точка скорее всего
                         var maxGroup = tochnoSpornye.GroupBy(c => c.ProbOfSignal1ToTime(t)).Max();
                         double prob = maxGroup.Key;
                         if(prob > 0) {
+                            //всем по точке!!
                             foreach(var cand in maxGroup) {
                                 cand.AddPoint(sp.point,t);
                                 nepoluchivshie.Remove(cand);
                                 poluchivshie.Add(cand);
                             }
                         } else {
+                            //никто сейчас не может светить => это опять ничья точка
                             unknownPoints.Add(sp.point);
                         }
                         break;
@@ -109,6 +122,7 @@ namespace CoordGrab {
 
             #region принятие близких точек к группам пока еще неизвестных
             foreach(var upoint in unknownPoints) {
+                //список неидентицицированных прицелов, которым подошла текущая точка
                 var okCoords =
                     UnknownClosePoints.
                     Where(np => np.CoordList.Count > 0).
@@ -116,17 +130,20 @@ namespace CoordGrab {
                     ToList();
                 switch(okCoords.Count) {
                     case 1: {
+                        //идеальный случай
                         okCoords[0].AddPoint(upoint,t);
                         nepoluchivshieUnknown.Remove(okCoords[0]);
                         break;
                     }
                     case 0: {
+                        //чтожжж.... создаем новый неидентицицированных прицел
                         var newbe = new UnknownCoords();
                         newbe.AddPoint(upoint,t);
                         UnknownClosePoints.Add(newbe);
                         break;
                     }
                     default: {
+                        //всем по спорной точке!
                         foreach(var ucp in okCoords) {
                             ucp.AddPoint(upoint,t);
                         }
@@ -146,6 +163,7 @@ namespace CoordGrab {
             #endregion
 
             #region Если не хватает известных координат
+            
             var empty = nepoluchivshie.Where(np => np.CoordList.Count == 0).ToArray();
             if(empty.Length == 0)
                 return 1;
