@@ -7,31 +7,185 @@ using System.Windows;
 
 namespace CoordGrab {
     public class CoordDistributor {
+        private struct SpornajzTochka {
+            public Vector point;
+            public double time;
+            public IEnumerable<IKnownCoords> Candidates;
+            public SpornajzTochka(Vector p, double t,IEnumerable<IKnownCoords> candidates) {
+                point = p;
+                time = t;
+                Candidates = candidates;
+            }
+        }
         public static Vector NoPoint {
             get {
                 return new Vector(-1,-1000);
             }
         }
         public static int Nminimum = 5;
-        public List<IKnownCoords> goodBase;
+        public double AdoptRadius = 1.5;
+        public double TooLatePeriod = 0.5;
+        public List<IKnownCoords> GoodBase;
         public List<UnknownCoords> UnknownClosePoints;
+        public List<VectorTime> AbsoluteUnknownPoints;
 
         public CoordDistributor(IEnumerable<IKnownCoords> crdenum) {
-            goodBase = new List<IKnownCoords>(crdenum);
+            GoodBase = new List<IKnownCoords>(crdenum);
             UnknownClosePoints = new List<UnknownCoords>();
-            for(int i = 0; i < goodBase.Count; i++) {
-                UnknownClosePoints.Add(new UnknownCoords());
-            }
-            
+            AbsoluteUnknownPoints = new List<VectorTime>();
         }
 
-        //public int AddPoints(Vector[] points) {
-        //    StatisticFormula.FDistribution()
-        //}
 
-        //public Vector[] GetLastCoords() {
 
-        //}
+        public int AddPoints(double t, Vector[] points) {
+            GoodBase.ClearOldData(t, TooLatePeriod);
+            UnknownClosePoints.ClearOldData(t,TooLatePeriod);
+
+            var unknownPoints = new List<Vector>(points.Length);
+            var sporniePoints = new List<SpornajzTochka>(points.Length);
+            var nepoluchivshie = new List<IKnownCoords>(GoodBase);
+            var poluchivshie = new List<IKnownCoords>(GoodBase.Count);
+            var nepoluchivshieUnknown = new List<IUnknownCoords>(UnknownClosePoints);
+            #region принятие идеальных точек
+            foreach(var point in points) {
+                var okCoords =
+                    GoodBase.
+                    Where(np => np.CoordList.Count > 0).
+                    Where(np => np.GetDistToLast1Point(point) <= AdoptRadius).
+                    ToList();
+                switch(okCoords.Count) {
+                    case 1: {
+                        okCoords[0].AddPoint(point,t);
+                        nepoluchivshie.Remove(okCoords[0]);
+                        poluchivshie.Add(okCoords[0]);
+                        break;
+                    }
+                    case 0: {
+                        unknownPoints.Add(point);
+                        break;
+                    }
+                    default: {
+                        sporniePoints.Add(new SpornajzTochka(point,t,okCoords));
+                        break;
+                    }               
+                }
+            }
+            #endregion
+
+            #region "разруливание" спорных ситуаций
+            foreach(var sp in sporniePoints) {
+                var tochnoSpornye = sp.Candidates.Except(poluchivshie).ToArray();
+                switch(tochnoSpornye.Length) {
+                    case 1: {
+                        tochnoSpornye[0].AddPoint(sp.point,t);
+                        nepoluchivshie.Remove(tochnoSpornye[0]);
+                        poluchivshie.Add(tochnoSpornye[0]);
+                        break;
+                    }
+                    case 0: {
+                        unknownPoints.Add(sp.point);
+                        break;
+                    }
+                    default: {
+
+                        var maxGroup = tochnoSpornye.GroupBy(c => c.ProbOfSignal1ToTime(t)).Max();
+                        double prob = maxGroup.Key;
+                        if(prob > 0) {
+                            foreach(var cand in maxGroup) {
+                                cand.AddPoint(sp.point,t);
+                                nepoluchivshie.Remove(cand);
+                                poluchivshie.Add(cand);
+                            }
+                        } else {
+                            unknownPoints.Add(sp.point);
+                        }
+                        break;
+                    }
+                }
+
+
+            }
+            #endregion
+
+            #region принятие близких точек к группам пока еще неизвестных
+            foreach(var upoint in unknownPoints) {
+                var okCoords =
+                    UnknownClosePoints.
+                    Where(np => np.CoordList.Count > 0).
+                    Where(np => np.GetDistToLast1Point(upoint) <= AdoptRadius).
+                    ToList();
+                switch(okCoords.Count) {
+                    case 1: {
+                        okCoords[0].AddPoint(upoint,t);
+                        nepoluchivshieUnknown.Remove(okCoords[0]);
+                        break;
+                    }
+                    case 0: {
+                        var newbe = new UnknownCoords();
+                        newbe.AddPoint(upoint,t);
+                        UnknownClosePoints.Add(newbe);
+                        break;
+                    }
+                    default: {
+                        foreach(var ucp in okCoords) {
+                            ucp.AddPoint(upoint,t);
+                        }
+                        break;
+                    }
+                }
+            }
+            #endregion
+
+            #region Добавление "пустых" точек к последовательностям
+            foreach(var npU in nepoluchivshieUnknown) {
+                npU.AddPoint(NoPoint,t);
+            }
+            foreach(var np in nepoluchivshie.Where(np => np.CoordList.Count > 3)) {
+                np.AddPoint(NoPoint,t);
+            }
+            #endregion
+
+            #region Если не хватает известных координат
+            var empty = nepoluchivshie.Where(np => np.CoordList.Count == 0).ToArray();
+            if(empty.Length == 0)
+                return 1;
+            var coincidence = new List<List<UnknownCoords>>(empty.Length);
+            for(int i = 0; i < empty.Length; i++) {
+                coincidence.Add(new List<UnknownCoords>());
+            }
+            foreach(var ucoord in UnknownClosePoints) {
+                if(ucoord.CoordList.Count < Nminimum)
+                    continue;
+                var t1 = ucoord.Get_t1_param();
+                for(int i = 0; i < empty.Length; i++) {
+                    if(Math.Abs(empty[i].T1 - ucoord.Get_t1_param()) < empty[i].T1_tol) {
+                        coincidence[i].Add(ucoord);
+                    }
+                }
+            }
+            for(int i = 0; i < empty.Length; i++) {
+                if(coincidence[i].Count == 1) {
+                    foreach(var vt in coincidence[i][0].CoordList) {
+                        empty[i].AddPoint(vt.Vec,vt.Time);
+                    }
+                    UnknownClosePoints.Remove(coincidence[i][0]);
+                }
+            }
+            #endregion
+
+            if(UnknownClosePoints.Any(uc => uc.CoordList.Count > 300))
+                return 7;
+            return 1;
+        }
+
+
+        public Vector[] GetLastCoords(bool allowExtrapol = true) {
+            var res = new Vector[GoodBase.Count];
+            for(int i = 0; i < GoodBase.Count; i++) {
+                res[i] = GoodBase[i].GetCoord(allowExtrapol);
+            }
+            return res;
+        }
 
 
     }
@@ -67,14 +221,18 @@ namespace CoordGrab {
         }
     }
     public interface IUnknownCoords {
-        double GetDistToLastPoint(Vector toPoint);
+        double GetDistToLast1Point(Vector toPoint);
+        double GetLastTime1();
         void AddPoint(Vector point,double time);
         LinkedList<VectorTime> CoordList { get; }
         double Get_t1_param();
         Vector  GetCoord(double toTime,bool allowExtrapol = true);
+        Vector GetCoord(bool allowExtrapol = true);
+        void ClearData();
     }
 
     public class UnknownCoords : IUnknownCoords {
+        public int MaxPoints { get; set; } = 500;
         public LinkedList<VectorTime> CoordList { get; } = new LinkedList<VectorTime>();
         public VectorTime Last1 = new VectorTime(CoordDistributor.NoPoint, -1);
         public VectorTime PreLast1 = new VectorTime(CoordDistributor.NoPoint,-1);
@@ -85,8 +243,9 @@ namespace CoordGrab {
             if(point.X >= 0) {
                 PreLast1 = Last1;
                 Last1 = new VectorTime(point,time);
-
-
+            }
+            while(CoordList.Count > MaxPoints) {
+                CoordList.RemoveFirst();
             }
                 
         }
@@ -105,10 +264,10 @@ namespace CoordGrab {
 
         }
 
-        public virtual double GetDistToLastPoint(Vector toPoint) {
+        public virtual double GetDistToLast1Point(Vector toPoint) {
             if(CoordList.Count == 0)
                 return 0;
-            return (CoordList.Last().Vec - toPoint).Length;
+            return (Last1.Vec - toPoint).Length;
         }
 
         public double Get_t1_param() {
@@ -125,29 +284,48 @@ namespace CoordGrab {
             return 0;
         }
 
+        public virtual void ClearData() {
+            CoordList.Clear();
+            Last1 = new VectorTime(CoordDistributor.NoPoint,-1);
+            PreLast1 = new VectorTime(CoordDistributor.NoPoint,-1);
+    }
+
+        public double GetLastTime1() {
+            return Last1.Time;
+        }
+
+        public Vector GetCoord(bool allowExtrapol = true) {
+            double time = CoordList.Last.Value.Time;
+            return GetCoord(time,allowExtrapol);
+        }
     }
 
     public interface IKnownCoords: IUnknownCoords {
         double ProbOfSignal1ToTime(double toTime);
         double T1{ get; }
+        double T1_tol { get; }
     }
 
-    public class Signal_Const1 : UnknownCoords, IKnownCoords {
+    public class Signal_Const1 : UnknownCoords, IKnownCoords, IUnknownCoords {
         public double T1 {
             get {
                 return 1;
             }
         }
 
+        public double T1_tol { get; set; } = 0.05;
+
         public double ProbOfSignal1ToTime(double toTime) {
             return 1d;
         }
     }
 
-    public class Signal_Blink01: UnknownCoords, IKnownCoords {
+    public class Signal_Blink01: UnknownCoords, IKnownCoords, IUnknownCoords {
         public double Hz { get; set; }
         public double DeltaHz { get; set; }
         public double T1 { get; set; }
+
+        public double T1_tol { get; set; } = 0.05;
         private double l1min, l0min, l1max, l0max;
         private void InitConst() {
             l1min = T1 / (Hz + DeltaHz);
@@ -156,7 +334,10 @@ namespace CoordGrab {
             l0max = (1 - T1) / (Hz - DeltaHz);
         }
         public LinkedList<Otrezok> OtrList = new LinkedList<Otrezok>();
-
+        public override void ClearData() {
+            base.ClearData();
+            OtrList.Clear();
+        }
         public Signal_Blink01(double hz,double dHz,double t1) {
             Hz = hz;
             DeltaHz = dHz;
@@ -174,6 +355,9 @@ namespace CoordGrab {
                 OtrList.Last.Value.Tmax = time;
             } else
                 throw new Exception("Прошлое не изменить!)");
+            while(OtrList.First.Value.Tmin < CoordList.First.Value.Time) {
+                OtrList.RemoveFirst();
+            }
             
         }
        
@@ -276,5 +460,29 @@ namespace CoordGrab {
 
         }
 
+    }
+
+    public static class SelectionHelper {
+        public static int AddPointToCoords(this IEnumerable<IUnknownCoords> coords, double t, Vector point, double adoptRadius = 1.5) {
+            var okCoords =
+                coords.
+                Where(np => np.CoordList.Count > 0).
+                Where(np => np.GetDistToLast1Point(point) <= adoptRadius).
+                ToArray();
+            if(okCoords.Length == 1) {
+                okCoords[0].AddPoint(point,t);
+
+            }
+            return okCoords.Length;
+        }
+        public static void ClearOldData(this IEnumerable<IUnknownCoords> coords, double t, double toolateperiod = 0.5) {
+            var oldCoords =
+                coords.
+                Where(gdCrds => gdCrds.CoordList.Count > 0).
+                Where(gdCrds => t - gdCrds.GetLastTime1() > toolateperiod);
+            foreach(var oldy in oldCoords) {
+                oldy.ClearData();
+            }
+        }
     }
 }
