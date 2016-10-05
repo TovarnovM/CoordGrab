@@ -83,6 +83,95 @@ namespace CoordGrab.Properties {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+        ///&lt;ArrayOfTrueCoord xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot;&gt;
+        ///  &lt;TrueCoord&gt;
+        ///    &lt;X&gt;
+        ///      &lt;_data&gt;
+        ///        &lt;DoubleInterpDouble&gt;
+        ///          &lt;double&gt;0&lt;/double&gt;
+        ///          &lt;InterpDouble Value=&quot;4.019292604501608&quot; /&gt;
+        ///        &lt;/DoubleInterpDouble&gt;
+        ///        &lt;DoubleInterpDouble&gt;
+        ///          &lt;double&gt;1&lt;/double&gt;
+        ///          &lt;InterpDouble Value=&quot;6.109324758842444&quot; /&gt;
+        ///        &lt;/DoubleInterpDouble&gt;
+        ///        &lt;DoubleInterpDou [остаток строки не уместился]&quot;;.
+        /// </summary>
+        internal static string Coords1 {
+            get {
+                return ResourceManager.GetString("Coords1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+        ///&lt;ArrayOfTrueCoord xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot;&gt;
+        ///  &lt;TrueCoord&gt;
+        ///    &lt;X&gt;
+        ///      &lt;_data&gt;
+        ///        &lt;DoubleInterpDouble&gt;
+        ///          &lt;double&gt;0&lt;/double&gt;
+        ///          &lt;InterpDouble Value=&quot;9.9898621664243148&quot; /&gt;
+        ///        &lt;/DoubleInterpDouble&gt;
+        ///        &lt;DoubleInterpDouble&gt;
+        ///          &lt;double&gt;0.1&lt;/double&gt;
+        ///          &lt;InterpDouble Value=&quot;14.143301861674892&quot; /&gt;
+        ///        &lt;/DoubleInterpDouble&gt;
+        ///        &lt;DoubleInter [остаток строки не уместился]&quot;;.
+        /// </summary>
+        internal static string Coords11 {
+            get {
+                return ResourceManager.GetString("Coords11", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+        ///&lt;ArrayOfTrueCoord xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot;&gt;
+        ///  &lt;TrueCoord&gt;
+        ///    &lt;X&gt;
+        ///      &lt;_data&gt;
+        ///        &lt;DoubleInterpDouble&gt;
+        ///          &lt;double&gt;0&lt;/double&gt;
+        ///          &lt;InterpDouble Value=&quot;9.9912495694486712&quot; /&gt;
+        ///        &lt;/DoubleInterpDouble&gt;
+        ///        &lt;DoubleInterpDouble&gt;
+        ///          &lt;double&gt;2&lt;/double&gt;
+        ///          &lt;InterpDouble Value=&quot;49.9754339518695&quot; /&gt;
+        ///        &lt;/DoubleInterpDouble&gt;
+        ///      &lt;/_data&gt;
+        ///      &lt;T [остаток строки не уместился]&quot;;.
+        /// </summary>
+        internal static string Coords2 {
+            get {
+                return ResourceManager.GetString("Coords2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+        ///&lt;ArrayOfTrueCoord xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot;&gt;
+        ///  &lt;TrueCoord&gt;
+        ///    &lt;X&gt;
+        ///      &lt;_data&gt;
+        ///        &lt;DoubleInterpDouble&gt;
+        ///          &lt;double&gt;0&lt;/double&gt;
+        ///          &lt;InterpDouble Value=&quot;9.9912495694486712&quot; /&gt;
+        ///        &lt;/DoubleInterpDouble&gt;
+        ///        &lt;DoubleInterpDouble&gt;
+        ///          &lt;double&gt;7&lt;/double&gt;
+        ///          &lt;InterpDouble Value=&quot;50.239159149247776&quot; /&gt;
+        ///        &lt;/DoubleInterpDouble&gt;
+        ///        &lt;DoubleInterpD [остаток строки не уместился]&quot;;.
+        /// </summary>
+        internal static string CoordsCross {
+            get {
+                return ResourceManager.GetString("CoordsCross", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap PauseImage {
@@ -122,6 +211,98 @@ namespace CoordGrab.Properties {
         internal static string Signals {
             get {
                 return ResourceManager.GetString("Signals", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+        ///&lt;ArrayOfFuzzySignal xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot;&gt;
+        ///  &lt;FuzzySignal&gt;
+        ///    &lt;OneHzImpulse&gt;
+        ///      &lt;_data&gt;
+        ///        &lt;DoubleInterpDouble&gt;
+        ///          &lt;double&gt;0&lt;/double&gt;
+        ///          &lt;InterpDouble Value=&quot;1&quot; /&gt;
+        ///        &lt;/DoubleInterpDouble&gt;
+        ///        &lt;DoubleInterpDouble&gt;
+        ///          &lt;double&gt;1&lt;/double&gt;
+        ///          &lt;InterpDouble Value=&quot;1&quot; /&gt;
+        ///        &lt;/DoubleInterpDouble&gt;
+        ///      &lt;/_data&gt;
+        ///      &lt;Title&gt;Title&lt;/Title [остаток строки не уместился]&quot;;.
+        /// </summary>
+        internal static string Signals1 {
+            get {
+                return ResourceManager.GetString("Signals1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+        ///&lt;ArrayOfFuzzySignal xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot;&gt;
+        ///  &lt;FuzzySignal&gt;
+        ///    &lt;OneHzImpulse&gt;
+        ///      &lt;_data&gt;
+        ///        &lt;DoubleInterpDouble&gt;
+        ///          &lt;double&gt;0&lt;/double&gt;
+        ///          &lt;InterpDouble Value=&quot;1&quot; /&gt;
+        ///        &lt;/DoubleInterpDouble&gt;
+        ///        &lt;DoubleInterpDouble&gt;
+        ///          &lt;double&gt;1&lt;/double&gt;
+        ///          &lt;InterpDouble Value=&quot;1&quot; /&gt;
+        ///        &lt;/DoubleInterpDouble&gt;
+        ///      &lt;/_data&gt;
+        ///      &lt;Title&gt;Title&lt;/Title [остаток строки не уместился]&quot;;.
+        /// </summary>
+        internal static string Signals11 {
+            get {
+                return ResourceManager.GetString("Signals11", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+        ///&lt;ArrayOfFuzzySignal xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot;&gt;
+        ///  &lt;FuzzySignal&gt;
+        ///    &lt;OneHzImpulse&gt;
+        ///      &lt;_data&gt;
+        ///        &lt;DoubleInterpDouble&gt;
+        ///          &lt;double&gt;0&lt;/double&gt;
+        ///          &lt;InterpDouble Value=&quot;1&quot; /&gt;
+        ///        &lt;/DoubleInterpDouble&gt;
+        ///        &lt;DoubleInterpDouble&gt;
+        ///          &lt;double&gt;1&lt;/double&gt;
+        ///          &lt;InterpDouble Value=&quot;1&quot; /&gt;
+        ///        &lt;/DoubleInterpDouble&gt;
+        ///      &lt;/_data&gt;
+        ///      &lt;Title&gt;Title&lt;/Title [остаток строки не уместился]&quot;;.
+        /// </summary>
+        internal static string Signals2 {
+            get {
+                return ResourceManager.GetString("Signals2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+        ///&lt;ArrayOfFuzzySignal xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot;&gt;
+        ///  &lt;FuzzySignal&gt;
+        ///    &lt;OneHzImpulse&gt;
+        ///      &lt;_data&gt;
+        ///        &lt;DoubleInterpDouble&gt;
+        ///          &lt;double&gt;0&lt;/double&gt;
+        ///          &lt;InterpDouble Value=&quot;1&quot; /&gt;
+        ///        &lt;/DoubleInterpDouble&gt;
+        ///        &lt;DoubleInterpDouble&gt;
+        ///          &lt;double&gt;1&lt;/double&gt;
+        ///          &lt;InterpDouble Value=&quot;1&quot; /&gt;
+        ///        &lt;/DoubleInterpDouble&gt;
+        ///      &lt;/_data&gt;
+        ///      &lt;Title&gt;Title&lt;/Title [остаток строки не уместился]&quot;;.
+        /// </summary>
+        internal static string SignalsConst {
+            get {
+                return ResourceManager.GetString("SignalsConst", resourceCulture);
             }
         }
     }

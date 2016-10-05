@@ -168,6 +168,30 @@
   <ItemGroup>
     <Resource Include="Resources\Signals.xml" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Coords.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Coords1.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Coords2.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\CoordsCross.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Signals.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Signals1.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Signals2.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\SignalsConst.xml" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
