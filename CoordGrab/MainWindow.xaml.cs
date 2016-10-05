@@ -24,7 +24,11 @@ namespace CoordGrab {
     /// </summary>
     public partial class MainWindow : Window {
         public MainWindow() {
+            Timer = new System.Windows.Threading.DispatcherTimer();
             InitializeComponent();
+            
+            Timer.Tick += dispatcherTimer_Tick;
+            Timer.Interval = new TimeSpan(0,0,0,0,(int)sliderSpeed.Value);
         }
 
         private void button_Click(object sender,RoutedEventArgs e) {
@@ -70,7 +74,7 @@ namespace CoordGrab {
             }
             var vm = DataContext as MainViewModel;
             vm.Model1.Series.Add(ss);
-            vm.Model1.InvalidatePlot(false);
+            //vm.Model1.InvalidatePlot(false);
         }
 
         private void checkBox_Checked(object sender,RoutedEventArgs e) {
@@ -246,7 +250,7 @@ namespace CoordGrab {
             }
         }
 
-        private void button7_Click(object sender,RoutedEventArgs e) {
+        private void ZagrAll(object sender,RoutedEventArgs e) {
             var vm = DataContext as MainViewModel;
             double resizeMasht;
             Double.TryParse(tbResize.Text,out resizeMasht);
@@ -386,10 +390,9 @@ namespace CoordGrab {
         }
 
         private void button7_Copy_Click(object sender,RoutedEventArgs e) {
-            OpenCoords(@"Coords2.xml");
+            OpenCoords(@"CoordsCross.xml");
             OpenSignals(@"Signals2.xml");
-            var vm = DataContext as MainViewModel;
-            vm.SynchModels(1,120,10);
+            ZagrAll(sender,e);
         }
 
         private void checkBox1_Checked(object sender,RoutedEventArgs e) {
@@ -497,6 +500,135 @@ namespace CoordGrab {
             vm.GetGraphics();
             
             
+        }
+
+        private void button11_Click(object sender,RoutedEventArgs e) {
+            var vm = DataContext as MainViewModel;
+            //vm.Model4.PlotType = PlotType.Cartesian;
+            vm.Model4.InvalidatePlot(true);
+            vm.Model4.ResetAllAxes();
+        }
+
+        private System.Windows.Threading.DispatcherTimer Timer;
+        private void dispatcherTimer_Tick(object sender,EventArgs e) {
+            // code goes here
+        }
+
+        private void button12_Click(object sender,RoutedEventArgs e) {
+            ZagrAll(sender,e);
+            var vm = DataContext as MainViewModel;
+            vm.LoadData();
+
+            slider.Minimum = 1;
+            slider.Maximum = vm.Ntime;
+
+
+
+
+        }
+
+        public CoordDistributor Alg { get; set; }
+
+        private void sliderSpeed_ValueChanged(object sender,RoutedPropertyChangedEventArgs<double> e) {
+            Timer.Interval = new TimeSpan(0,0,0,(int)sliderSpeed.Value);
+        }
+
+        private void checkBox1_Copy_Checked(object sender,RoutedEventArgs e) {
+            var vm = DataContext as MainViewModel;
+            vm.Model4.Series[4].IsVisible = true;
+            vm.Model4.InvalidatePlot(false);
+        }
+
+        private void checkBox1_Copy_Unchecked(object sender,RoutedEventArgs e) {
+            var vm = DataContext as MainViewModel;
+            vm.Model4.Series[4].IsVisible = false;
+            vm.Model4.InvalidatePlot(false);
+        }
+
+        private void checkBox1_Copy1_Checked(object sender,RoutedEventArgs e) {
+            var vm = DataContext as MainViewModel;
+            for(int i = 0; i < 4; i++) {
+                vm.Model4.Series[i].IsVisible = true;
+            }
+            
+            vm.Model4.InvalidatePlot(false);
+        }
+
+        private void checkBox1_Copy1_Unchecked(object sender,RoutedEventArgs e) {
+            var vm = DataContext as MainViewModel;
+            for(int i = 0; i < 4; i++) {
+                vm.Model4.Series[i].IsVisible = false;
+            }
+            vm.Model4.InvalidatePlot(false);
+        }
+
+        private void slider_ValueChanged(object sender,RoutedPropertyChangedEventArgs<double> e) {
+            var vm = DataContext as MainViewModel;
+            if(vm.AlgorDataPoints.Count < 1 && vm.NCurr == (int)e.NewValue)
+                return;
+            vm.NCurr = (int)e.NewValue;
+        }
+
+        private void chbx1_Checked(object sender,RoutedEventArgs e) {
+            var vm = DataContext as MainViewModel;
+            vm.Model5.Series[0].IsVisible = true;
+            vm.Model5.InvalidatePlot(false);
+        }
+
+        private void chbx1_Unchecked(object sender,RoutedEventArgs e) {
+            var vm = DataContext as MainViewModel;
+            vm.Model5.Series[0].IsVisible = false;
+            vm.Model5.InvalidatePlot(false);
+        }
+
+
+        private void chbx2_Checked(object sender,RoutedEventArgs e) {
+            var vm = DataContext as MainViewModel;
+            vm.Model5.Series[1].IsVisible = true;
+            vm.Model5.InvalidatePlot(false);
+        }
+
+        private void chbx2_Unchecked(object sender,RoutedEventArgs e) {
+            var vm = DataContext as MainViewModel;
+            vm.Model5.Series[1].IsVisible = false;
+            vm.Model5.InvalidatePlot(false);
+        }
+
+        private void chbx3_Checked(object sender,RoutedEventArgs e) {
+            var vm = DataContext as MainViewModel;
+            vm.Model5.Series[2].IsVisible = true;
+            vm.Model5.InvalidatePlot(false);
+        }
+
+        private void chbx3_Unchecked(object sender,RoutedEventArgs e) {
+            var vm = DataContext as MainViewModel;
+            vm.Model5.Series[2].IsVisible = false;
+            vm.Model5.InvalidatePlot(false);
+        }
+
+        private void chbx4_Checked(object sender,RoutedEventArgs e) {
+            var vm = DataContext as MainViewModel;
+            vm.Model5.Series[3].IsVisible = true;
+            vm.Model5.InvalidatePlot(false);
+        }
+
+        private void chbx4_Unchecked(object sender,RoutedEventArgs e) {
+            var vm = DataContext as MainViewModel;
+            vm.Model5.Series[3].IsVisible = false;
+            vm.Model5.InvalidatePlot(false);
+        }
+
+
+        private void chbxU_Checked(object sender,RoutedEventArgs e) {
+            var vm = DataContext as MainViewModel;
+            vm.Model5.Series[4].IsVisible = true;
+            vm.Model5.InvalidatePlot(false);
+        }
+
+        private void chbxU_Unchecked(object sender,RoutedEventArgs e) {
+            var vm = DataContext as MainViewModel;
+            vm.Model5.Series[4].IsVisible = false;
+            vm.Model5.InvalidatePlot(false);
         }
     }
 

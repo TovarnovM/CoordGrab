@@ -44,7 +44,7 @@
                     <CheckBox x:Name="checkBox" Content="Показ.№" HorizontalAlignment="Left" Margin="10,173,0,0" VerticalAlignment="Top" Checked="checkBox_Checked_1" Unchecked="checkBox_Unchecked" IsChecked="True"/>
                     <Button x:Name="button5" Content="Сохранить" HorizontalAlignment="Left" Height="26" Margin="7,238,0,0" VerticalAlignment="Top" Width="87" Click="button5_Click"/>
                     <Button x:Name="button5_Copy" Content="Загрузить" HorizontalAlignment="Left" Height="26" Margin="7,264,0,0" VerticalAlignment="Top" Width="87" Click="button5_Copy_Click"/>
-                    <TextBox x:Name="tbResize" HorizontalAlignment="Left" Height="18" Margin="10,193,0,0" TextWrapping="Wrap" Text="0,1" VerticalAlignment="Top" Width="84" ToolTip="Шаг времени" />
+                    <TextBox x:Name="tbResize" HorizontalAlignment="Left" Height="18" Margin="10,193,0,0" TextWrapping="Wrap" Text="7" VerticalAlignment="Top" Width="84" ToolTip="Шаг времени" />
                 </Grid>
             </TabItem>
             <TabItem Header="Сигналы прицелов">
@@ -97,6 +97,26 @@
                     <Grid Margin="105,0,10,26" Grid.Column="1">
                         <oxy:PlotView Model="{Binding Model4}" Margin="10"/>
                     </Grid>
+                    <Button x:Name="button7" Content="Загрузить" HorizontalAlignment="Left" Height="26" Margin="10,10,0,0" VerticalAlignment="Top" Width="90" Grid.ColumnSpan="2" Click="ZagrAll"/>
+                    <CheckBox x:Name="checkBox1" Content="Цветн." HorizontalAlignment="Left" Margin="0,392,0,0" VerticalAlignment="Top" Checked="checkBox1_Checked" Unchecked="checkBox1_Unchecked" IsChecked="True"/>
+                    <Button x:Name="button7_Copy" Content="Загрузить Станд." HorizontalAlignment="Left" Height="26" Margin="10,41,0,0" VerticalAlignment="Top" Width="90" Click="button7_Copy_Click"/>
+                    <TextBox x:Name="tbCameraHz" HorizontalAlignment="Left" Height="19" Margin="10,102,0,0" TextWrapping="Wrap" Text="110" VerticalAlignment="Top" Width="90" ToolTip="Hz камеры"/>
+                    <TextBox x:Name="tbDCameraHz" HorizontalAlignment="Left" Height="19" Margin="10,126,0,0" TextWrapping="Wrap" Text="10" VerticalAlignment="Top" Width="90" ToolTip="dHz камеры"/>
+                    <Button x:Name="button9" Content="Save to XML" HorizontalAlignment="Left" Height="33" Margin="10,202,0,0" VerticalAlignment="Top" Width="82" Click="button9_Click"/>
+                    <Button x:Name="button9_Copy" Content="Save to CSV" HorizontalAlignment="Left" Height="33" Margin="10,240,0,0" VerticalAlignment="Top" Width="82" Click="button9_Copy_Click"/>
+                    <Button x:Name="button10" Content="графики" HorizontalAlignment="Left" Height="23" Margin="16,164,0,0" VerticalAlignment="Top" Width="84" Click="button10_Click"/>
+                    <Button x:Name="button11" Content="Button" HorizontalAlignment="Left" Height="47" Margin="16,278,0,0" VerticalAlignment="Top" Width="76" Click="button11_Click"/>
+                    <CheckBox x:Name="checkBox1_Copy" Content="Показ. фактич. т." HorizontalAlignment="Left" Margin="0,412,0,0" VerticalAlignment="Top" Checked="checkBox1_Copy_Checked" Unchecked="checkBox1_Copy_Unchecked" IsChecked="True"/>
+                    <CheckBox x:Name="checkBox1_Copy1" Content="Показ. идеальн. т." HorizontalAlignment="Left" Margin="0,432,0,0" VerticalAlignment="Top" Checked="checkBox1_Copy1_Checked" Unchecked="checkBox1_Copy1_Unchecked" IsChecked="True"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Тест алгоритма">
+                <Grid Background="#FFE5E5E5" Margin="0,0,0,0">
+
+
+                    <Grid Margin="105,0,10,26" Grid.Column="1">
+                        <oxy:PlotView Model="{Binding Model5}" Margin="10"/>
+                    </Grid>
                     <Button x:Name="button6" HorizontalAlignment="Left" Margin="41,0,0,0" Width="27" Height="26" VerticalAlignment="Bottom">
                         <Button.Foreground>
                             <SolidColorBrush Color="Black"/>
@@ -114,15 +134,15 @@
                             <ImageBrush ImageSource="Resources/PauseImage.bmp"/>
                         </Button.Background>
                     </Button>
-                    <Slider x:Name="slider" Margin="105,0,0,0" Height="26" VerticalAlignment="Bottom"/>
-                    <Button x:Name="button7" Content="Загрузить" HorizontalAlignment="Left" Height="26" Margin="10,10,0,0" VerticalAlignment="Top" Width="90" Grid.ColumnSpan="2" Click="button7_Click"/>
-                    <CheckBox x:Name="checkBox1" Content="Распознать" HorizontalAlignment="Left" Margin="10,72,0,0" VerticalAlignment="Top" Checked="checkBox1_Checked" Unchecked="checkBox1_Unchecked"/>
-                    <Button x:Name="button7_Copy" Content="Загрузить Станд." HorizontalAlignment="Left" Height="26" Margin="10,41,0,0" VerticalAlignment="Top" Width="90" Click="button7_Copy_Click"/>
-                    <TextBox x:Name="tbCameraHz" HorizontalAlignment="Left" Height="19" Margin="10,102,0,0" TextWrapping="Wrap" Text="110" VerticalAlignment="Top" Width="90" ToolTip="Hz камеры"/>
-                    <TextBox x:Name="tbDCameraHz" HorizontalAlignment="Left" Height="19" Margin="10,126,0,0" TextWrapping="Wrap" Text="10" VerticalAlignment="Top" Width="90" ToolTip="dHz камеры"/>
-                    <Button x:Name="button9" Content="Save to XML" HorizontalAlignment="Left" Height="33" Margin="10,202,0,0" VerticalAlignment="Top" Width="82" Click="button9_Click"/>
-                    <Button x:Name="button9_Copy" Content="Save to CSV" HorizontalAlignment="Left" Height="33" Margin="10,240,0,0" VerticalAlignment="Top" Width="82" Click="button9_Copy_Click"/>
-                    <Button x:Name="button10" Content="графики" HorizontalAlignment="Left" Height="23" Margin="16,164,0,0" VerticalAlignment="Top" Width="84" Click="button10_Click"/>
+                    <Slider x:Name="slider" Margin="105,0,0,0" Height="26" VerticalAlignment="Bottom" ValueChanged="slider_ValueChanged"/>
+                    <Slider x:Name="sliderSpeed" Margin="10,0,0,0.333" Orientation="Vertical" Height="82" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="29" Minimum="100" Value="1" IsDirectionReversed="True" Maximum="1000" SmallChange="1" LargeChange="100" TickPlacement="BottomRight" ValueChanged="sliderSpeed_ValueChanged" AutoToolTipPlacement="TopLeft"/>
+                    <Button x:Name="button12" Content="Загрузить данные" HorizontalAlignment="Left" Height="50" Margin="10,24,0,0" VerticalAlignment="Top" Width="95" Click="button12_Click"/>
+                    <CheckBox x:Name="chbx1" Content="1 signal" HorizontalAlignment="Left" Margin="10,96,0,0" VerticalAlignment="Top" IsChecked="True" Checked="chbx1_Checked" Unchecked="chbx1_Unchecked"/>
+                    <CheckBox x:Name="chbx2" Content="2 signal" HorizontalAlignment="Left" Margin="10,116,0,0" VerticalAlignment="Top" IsChecked="True" Checked="chbx2_Checked" Unchecked="chbx2_Unchecked"/>
+                    <CheckBox x:Name="chbx3" Content="3 signal" HorizontalAlignment="Left" Margin="10,136,0,0" VerticalAlignment="Top" IsChecked="True" Checked="chbx3_Checked" Unchecked="chbx3_Unchecked"/>
+                    <CheckBox x:Name="chbx4" Content="4 signal" HorizontalAlignment="Left" Margin="10,156,0,0" VerticalAlignment="Top" IsChecked="True" Checked="chbx4_Checked" Unchecked="chbx4_Unchecked"/>
+                    <CheckBox x:Name="chbx4_Copy" Content="U signal" HorizontalAlignment="Left" Margin="10,176,0,0" VerticalAlignment="Top" IsChecked="True" Checked="chbxU_Checked" Unchecked="chbxU_Unchecked"/>
+
                 </Grid>
             </TabItem>
         </TabControl>

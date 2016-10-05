@@ -22,19 +22,22 @@ namespace CoordGrab
             InitModel2();
             InitModel3("Signals");
             InitModel4("TimeSim");
+            InitModel5("Algorythm");
 
         }
         public PlotModel Model1 { get; private set; }
         public PlotModel Model2 { get; private set; }
         public PlotModel Model3 { get; private set; }
         public PlotModel Model4 { get; private set; }
+        public PlotModel Model5 { get; private set; }
         #region Model2
 
-    public int ActiveIndex { get; set; } = 0;
+        public int ActiveIndex { get; set; } = 0;
         public Func<IRenderContext,IRenderContext> StandartContext { get; set; }
         public Func<IRenderContext,IRenderContext> CoolContext { get; set; }
         public void InitModel2() {
             Model2 = GetNewModel("GetCoords4Sim");
+            Model2.PlotType = PlotType.Cartesian;
             Model2.Series.Add(GetSeries4Model2("траектория1",OxyColors.SkyBlue,0));
             Model2.Series.Add(GetSeries4Model2("траектория2",OxyColors.DarkBlue,1));
             Model2.Series.Add(GetSeries4Model2("траектория3",OxyColors.MediumVioletRed,2));
@@ -286,6 +289,8 @@ namespace CoordGrab
         public List<InterpXY> SignalsInterp { get; set; }
         public List<double> TimeMoments { get; set; }
         public List<List<Vector?>> ReceivedPoints { get; set; }
+        public double UnityRadius { get; set; } = 3d;
+        public List<List<Vector>> ReceivedPointsTrue { get; set; }
 
         public void InitModel4(string title) {
             Model4 = GetNewModel(title);
@@ -296,7 +301,12 @@ namespace CoordGrab
                     MarkerSize = 2
                 });
             }
-
+            Model4.Series.Add(new ScatterSeries {
+                Title = "Фактич. полученные координаты",
+                MarkerType = MarkerType.Diamond,
+                MarkerSize = 2,
+                MarkerFill = OxyColors.DarkOrange
+            });
             ColoredPoints = false;
 
 
@@ -324,13 +334,12 @@ namespace CoordGrab
             }
         }
 
-
         public void SynchModels(double resizeMnozj, double cameraHz, double dcameraHz) {
             Coords = GetTrueCoordsList(resizeMnozj);
             if(Signals.Count != 4)
                 throw new Exception("Загрузи сигналы!");
             var timeMaxSeq = from crds in Coords
-                          select crds.X.Data.Keys.Max();
+                             select crds.X.Data.Keys.Max();
             var timeMax = timeMaxSeq.Max();
 
             double t_shagAver = 0.5 / (cameraHz - dcameraHz) + 0.5 / (cameraHz + dcameraHz);
@@ -360,12 +369,64 @@ namespace CoordGrab
                 }
             }
 
+            var trp = ReceivedPoints.
+                Select(lv => {
+                    var notNull = lv.Where(v => v.HasValue).Select(v => v.Value).ToList();
+
+                    var distMatr = new bool[notNull.Count,notNull.Count];
+                    for(int i = 0; i < notNull.Count; i++) {
+                        for(int j = i + 1; j < notNull.Count; j++) {
+                            distMatr[i,j] = (notNull[i] - notNull[j]).Length < UnityRadius;
+                            distMatr[j,i] = distMatr[i,j];
+                        }
+                    }
+
+                    var alreadyUnityP = new List<int>(notNull.Count);
+                    var res = new List<Vector>(4);
+                    for(int i = 0; i < notNull.Count; i++) {
+                        if(alreadyUnityP.Contains(i))
+                            continue;
+                        var closeP = new List<int>(notNull.Count);
+
+                        Action<int> recurce = null;
+                        recurce = new Action<int>((nearMe) => {
+                            closeP.Add(nearMe);
+                            for(int k = 0; k < notNull.Count; k++) {
+                                if(distMatr[nearMe,k] && !closeP.Contains(k)) {
+                                    recurce(k);
+                                }
+                            }
+                        });
+
+                        recurce(i);
+                        alreadyUnityP.AddRange(closeP);
+                        alreadyUnityP = alreadyUnityP.Distinct().ToList();
+                        if(closeP.Count > 2) {
+                            int ss = 1;
+                        }
+                        //var resP = notNull[closeP[0]];
+                        //for(int j = 1; j< closeP.Count; j++) {
+                        //    resP += notNull[closeP[j]];                            
+                        //}
+                        //resP /= closeP.Count + 1;
+                        var resP = closeP.Aggregate(new Vector(),(vec,k) => vec += notNull[k],(vec) => vec /= closeP.Count);
+                        res.Add(resP);
+                    }
+
+                    return res;
+                });
+            ReceivedPointsTrue = new List<List<Vector>>(TimeMoments.Capacity);
+            foreach(var rp in trp) {
+                ReceivedPointsTrue.Add(rp);
+            }
+
             RedrawModel4();
 
         }
 
         public void GetGraphics() {
-            if(Model4.Series.Count == 4) {
+            int N = 5;
+            if(Model4.Series.Count == N) {
                 Model4.Series.Add(new LineSeries {
                     Title = "t фактич траектории 1",
                     Color = OxyColors.SkyBlue
@@ -384,25 +445,23 @@ namespace CoordGrab
                 });
                
             }
-            for(int i = 4; i < 8; i++) {
+            for(int i = N; i < N+4; i++) {
                 (Model4.Series[i] as LineSeries).Points.Clear();
             }
 
-            for(int i = 0; i < 4; i++) {
+            for(int i = 0; i < N; i++) {
                 int n = 0;
                 for(int j = 0; j < ReceivedPoints.Count; j++) {
                     if(ReceivedPoints[j][i].HasValue)
                         n++;
-                    (Model4.Series[i + 4] as LineSeries).Points.Add(new DataPoint(j,(double)n / (j+1)));
+                    (Model4.Series[i + N] as LineSeries).Points.Add(new DataPoint(j,(double)n / (j+1)));
                 }
             }
             Model4.InvalidatePlot(false);
         }
 
         public void RedrawModel4() {
-            for(int i = 0;
-            i < 4;
-            i++) {
+            for(int i = 0; i < 5; i++) {
                 (Model4.Series[i] as ScatterSeries).Points.Clear();
             }
 
@@ -421,10 +480,123 @@ namespace CoordGrab
                     
                 }
             }
+            var seq = from t in ReceivedPointsTrue
+                      from v in t
+                      select new ScatterPoint(v.X, v.Y);
+
+            (Model4.Series[4] as ScatterSeries).Points.AddRange(seq);
+
+
 
 
             Model4.InvalidatePlot(false);
         }
+
+        #endregion
+
+        #region Model5
+        public int Ntime { get; set; }
+        private int ncurr;
+
+        public int NCurr {
+            get { return ncurr; }
+            set { ncurr = value;
+                for(int i = 0; i < 4; i++) {
+                    var ss = Model5.Series[i] as ScatterSeries;
+                    ss.Points.Clear();
+                    for(int j = 0; j < ncurr; j++) {
+                        if(AlgorDataPoints[i][j] != null)
+                            ss.Points.Add(AlgorDataPoints[i][j]);
+                    }
+                }
+                var sss = Model5.Series[4] as ScatterSeries;
+                sss.Points.Clear();
+                for(int j = 0; j < ncurr; j++) {
+                    foreach(var sp in UDataPoints[j]) {
+                        sss.Points.Add(sp);
+                    }
+                }
+
+
+                    Model5.InvalidatePlot(true);
+
+
+            }
+        }
+
+        public List<List<ScatterPoint>> AlgorDataPoints = new List<List<ScatterPoint>>(5);
+        public List<List<ScatterPoint>> UDataPoints = new List<List<ScatterPoint>>();
+
+        public void LoadData() {
+            AlgorDataPoints.Clear();
+            UDataPoints.Clear();
+            var lst = new List<IKnownCoords>(4);
+            foreach(var s in Signals) {
+                if(s.T1 >= 1) {
+                    lst.Add(new Signal_Const1());
+                }else {
+                    lst.Add(new Signal_Blink01(s.Hz0,s.DeltaHz,s.T1));
+                }
+                
+                AlgorDataPoints.Add(new List<ScatterPoint>(Ntime+1));
+            }
+
+            UDataPoints.Capacity = Ntime + 1;
+
+            var cd = new CoordDistributor(lst);
+
+            Ntime = ReceivedPointsTrue.Count();
+
+            for(int i = 0; i < Ntime; i++) {
+                cd.AddPoints(TimeMoments[i],ReceivedPointsTrue[i].ToArray());
+                var rPoints = cd.GetLastCoords(false);
+                for(int j = 0; j < rPoints.Length; j++) {
+                    if(rPoints[j].X >= 0) {
+                        AlgorDataPoints[j].Add(new ScatterPoint(rPoints[j].X,rPoints[j].Y));
+                    } else {
+                        AlgorDataPoints[j].Add(null);
+                    }
+                }
+
+                
+                UDataPoints.Add(new List<ScatterPoint>(cd.UnknownClosePoints.Count));
+                for(int j = 0; j < cd.UnknownClosePoints.Count; j++) {
+                    var uPoint = cd.UnknownClosePoints[j].GetCoord(false);
+                    if(uPoint.X >= 0) {
+                        UDataPoints[i].Add(new ScatterPoint(uPoint.X,uPoint.Y));
+                    }
+                }
+            }
+        }
+        
+
+
+
+        public void InitModel5(string title) {
+            Model5 = GetNewModel(title);
+            for(int i = 0; i < 4; i++) {
+                Model5.Series.Add(new ScatterSeries {
+                    Title = "траектория" + i.ToString(),
+                    MarkerType = MarkerType.Circle,
+                    MarkerSize = 2
+                });
+            }
+            (Model5.Series[0] as ScatterSeries).MarkerFill = OxyColors.SkyBlue;
+            (Model5.Series[1] as ScatterSeries).MarkerFill = OxyColors.DarkBlue;
+            (Model5.Series[2] as ScatterSeries).MarkerFill = OxyColors.MediumVioletRed;
+            (Model5.Series[3] as ScatterSeries).MarkerFill = OxyColors.ForestGreen;
+
+            Model5.Series.Add(new ScatterSeries {
+                Title = "?? точки",
+                MarkerType = MarkerType.Star,
+                MarkerSize = 3,
+                MarkerStroke = OxyColors.Red
+            });
+        }
+        
+
+
+
 
         #endregion
     }
