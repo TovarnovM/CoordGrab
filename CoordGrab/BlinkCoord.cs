@@ -11,6 +11,7 @@ namespace CoordGrab {
     public class FuzzyBlinkCoord {
         public TrueCoord Coord { get; set; }
         public FuzzySignal InterpSignal { get; set; }
-        
+        public int MyProperty { get; set; }
+
     }
 }
