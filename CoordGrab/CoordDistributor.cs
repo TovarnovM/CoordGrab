@@ -10,11 +10,13 @@ namespace CoordGrab {
         private struct SpornajzTochka {
             public Vector point;
             public double time;
+            public int MyProperty { get; set; } 
             public IEnumerable<IKnownCoords> Candidates;
             public SpornajzTochka(Vector p, double t,IEnumerable<IKnownCoords> candidates) {
                 point = p;
                 time = t;
                 Candidates = candidates;
+                MyProperty = 77;
             }
         }
         private Random rnd;
